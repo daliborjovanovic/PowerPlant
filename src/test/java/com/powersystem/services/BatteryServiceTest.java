@@ -1,7 +1,9 @@
 package com.powersystem.services;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.ArgumentMatchers.booleanThat;
+import static org.mockito.ArgumentMatchers.doubleThat;
 import static org.mockito.ArgumentMatchers.intThat;
 import static org.mockito.Mockito.verify;
 
@@ -71,6 +73,27 @@ public class BatteryServiceTest {
 		batteryService.batteriesInRange(fromPostcode, toPostcode);
 		
 		verify(batteryRepository).findAllByPostcodeBetweenOrderByNameAsc(fromPostcode, toPostcode);
+	}
+	
+	@Test
+	void totalCapacityTest() {
+	  List<Battery> batteries = Arrays.asList(battery1, battery2, battery3, battery4);
+	  
+	  double totalCapacity = batteryService.totalCapacity(batteries);
+	  
+	  assertEquals(2600, totalCapacity);
+		
+	}
+	
+
+	@Test
+	void avgCapacityTest() {
+	  List<Battery> batteries = Arrays.asList(battery1, battery2, battery3, battery4);
+	  
+	  double avgCapacity = batteryService.avgCapacity(batteries);
+	  
+	  assertEquals(650, avgCapacity);
+		
 	}
 	
 	
