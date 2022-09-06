@@ -26,7 +26,7 @@ import com.powersystem.modelDto.BatteryDto;
 import com.powersystem.services.BatteryService;
 
 @WebMvcTest(BatteryController.class)
-public class BatteryControllerTest {
+class BatteryControllerTest {
 
 	@Autowired
 	MockMvc mockMvc;
