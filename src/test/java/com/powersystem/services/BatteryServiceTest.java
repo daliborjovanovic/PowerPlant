@@ -2,9 +2,6 @@ package com.powersystem.services;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.anyInt;
-import static org.mockito.ArgumentMatchers.booleanThat;
-import static org.mockito.ArgumentMatchers.doubleThat;
-import static org.mockito.ArgumentMatchers.intThat;
 import static org.mockito.Mockito.verify;
 
 import java.util.ArrayList;
@@ -15,13 +12,9 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
-import org.mockito.exceptions.base.MockitoException;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import com.powersystem.model.Battery;

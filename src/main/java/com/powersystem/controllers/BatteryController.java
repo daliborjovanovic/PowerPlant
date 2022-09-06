@@ -3,32 +3,38 @@ package com.powersystem.controllers;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.aspectj.weaver.NewConstructorTypeMunger;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import com.powersystem.mapper.BatteryMapper;
+
 import com.powersystem.model.Battery;
 import com.powersystem.modelDto.BatteriesInRangeDto;
 import com.powersystem.modelDto.BatteryDto;
 import com.powersystem.services.BatteryService;
 
+import lombok.AllArgsConstructor;
+
 @RestController
-@RequestMapping
+@RequestMapping("/batteries")
+@AllArgsConstructor
 public class BatteryController {
 
 	@Autowired
 	private BatteryService batteryService;
-	@Autowired
-	private BatteryMapper batteryMapper;
+	
+	private  ModelMapper modelMapper;
+
+	
+	
 
 	@PostMapping
-	public ResponseEntity<Boolean> save(@RequestBody List<BatteryDto> batteriesDto) {
+	public ResponseEntity<Boolean> saveBatteries(@RequestBody List<BatteryDto> batteriesDto) {
 		List<Battery> batteries = new ArrayList<>();
 		for (BatteryDto batteryDto : batteriesDto) {
-			batteries.add(batteryMapper.mapDtoToEntity(batteryDto));
+			batteries.add(modelMapper.map(batteryDto, Battery.class));
 		}
 
 		boolean ok = batteryService.saveBatteries(batteries);
