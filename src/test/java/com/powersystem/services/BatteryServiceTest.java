@@ -67,6 +67,7 @@ class BatteryServiceTest {
 		verify(batteryRepository).findAllByPostcodeBetweenOrderByNameAsc(fromPostcode, toPostcode);
 	}
 	
+	
 	@Test
 	void totalCapacityTest() {
 	  List<Battery> batteries = Arrays.asList(battery1, battery2, battery3, battery4);
