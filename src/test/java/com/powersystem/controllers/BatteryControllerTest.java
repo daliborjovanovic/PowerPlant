@@ -44,7 +44,7 @@ public class BatteryControllerTest {
 
 	@Test
 	void saveBatteriesTest() throws Exception {
-		List<Battery> batteries = Arrays.asList(battery1, battery2, battery3);
+		List<Battery> batteries = Arrays.asList(battery1, battery2, battery3, battery4);
 		List<Battery> batteriesWithNullIds = batteries.stream()
 				.map(battery -> new Battery(0, battery.getName(), battery.getPostcode(), battery.getWattCapacity()))
 				.collect(Collectors.toList());
@@ -60,5 +60,29 @@ public class BatteryControllerTest {
 		mockMvc.perform(mockRequest).andExpect(status().isCreated())
 				.andReturn();
 	}
+	
+	@Test
+	void getBatteriesInRangeTest() throws Exception {
+		  int fromPostcode = 21000;
+	      int toPostcode = 23000;;
 
+	        List<Battery> batteries = Arrays.asList(battery1, battery2, battery3, battery4);
+	        
+	        Mockito.when(batteryService.batteriesInRange(fromPostcode, toPostcode)).thenReturn(batteries);
+	        Mockito.when(batteryService.totalCapacity(batteries)).thenReturn(2600.0);
+	        Mockito.when(batteryService.avgCapacity(batteries)).thenReturn(650.0);
+
+	        MockHttpServletRequestBuilder mockRequest = MockMvcRequestBuilders
+	                .get("/batteries")
+	                .param("from", Integer.toString(fromPostcode))
+	                .param("to", Integer.toString(toPostcode))
+	                .contentType(MediaType.APPLICATION_JSON);
+		
+	        mockMvc.perform(mockRequest).andExpect(status().isOk())
+			.andReturn();
+		
+	}
+	
+	
+	
 }
