@@ -22,7 +22,7 @@ import com.powersystem.repository.BatteryRepository;
 
 @ExtendWith(MockitoExtension.class)
 @ExtendWith(SpringExtension.class)
-public class BatteryServiceTest {
+class BatteryServiceTest {
 	
 	
     @Mock

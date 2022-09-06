@@ -13,7 +13,7 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import com.powersystem.model.Battery;
 
 @DataJpaTest
-public class BatteryRepositoryTest {
+class BatteryRepositoryTest {
 	
 	@Autowired
 	private BatteryRepository batteryRepository;

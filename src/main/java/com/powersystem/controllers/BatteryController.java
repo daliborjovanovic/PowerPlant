@@ -36,7 +36,7 @@ public class BatteryController {
 		boolean ok = batteryService.saveBatteries(batteries);
 		HttpStatus httpStatus = ok ? HttpStatus.CREATED : HttpStatus.BAD_REQUEST;
 
-		return new ResponseEntity<Boolean>(ok, httpStatus);
+		return new ResponseEntity<>(ok, httpStatus);
 
 	}
 

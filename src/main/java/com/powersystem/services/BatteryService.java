@@ -38,7 +38,7 @@ public class BatteryService {
 	public List<String> batteriesInRangeNames(List<Battery> batteries) {
 		
 		return batteries.stream()
-						.map(battery -> battery.getName())
+						.map(Battery::getName)
 						.collect(Collectors.toList());
 
 		
@@ -46,13 +46,13 @@ public class BatteryService {
 	
 	public double totalCapacity(List<Battery> batteries) {
 		return batteries.stream()
-							.map(battery->battery.getWattCapacity())
+							.map(Battery::getWattCapacity)
 							.reduce(0.0, Double::sum);
 	}
 	
 	public double avgCapacity(List<Battery> batteries) {
 		return batteries.stream()
-							.map(battery->battery.getWattCapacity())
+							.map(Battery::getWattCapacity)
 							.collect(Collectors.summarizingDouble(Double::doubleValue))
 							.getAverage();
 	}
