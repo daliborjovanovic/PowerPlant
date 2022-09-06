@@ -19,13 +19,13 @@ public class BatteryService {
 	@Autowired
 	private BatteryRepository batteryRepository;
 
-	public boolean saveBatteries(List<Battery> batteries) {
+	public List<Battery> saveBatteries(List<Battery> batteries) {
 		try {
 			batteryRepository.saveAll(batteries);
-			return true;
+			return batteryRepository.findAll();
 
 		} catch (Exception e) {
-			return false;
+			return null;
 		}
 	}
 	

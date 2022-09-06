@@ -7,11 +7,11 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import org.aspectj.weaver.NewConstructorTypeMunger;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
@@ -23,6 +23,7 @@ import com.powersystem.model.Battery;
 import com.powersystem.modelDto.BatteryDto;
 import com.powersystem.services.BatteryService;
 
+@WebMvcTest(BatteryController.class)
 public class BatteryControllerTest {
 
 	@Autowired
@@ -42,7 +43,7 @@ public class BatteryControllerTest {
 	Battery battery4 = new Battery(4, "BatteryTest5", 24000, 800.0);
 
 	@Test
-	void addBatteries_success() throws Exception {
+	void saveBatteriesTest() throws Exception {
 		List<Battery> batteries = Arrays.asList(battery1, battery2, battery3);
 		List<Battery> batteriesWithNullIds = batteries.stream()
 				.map(battery -> new Battery(0, battery.getName(), battery.getPostcode(), battery.getWattCapacity()))
@@ -50,17 +51,13 @@ public class BatteryControllerTest {
 		List<BatteryDto> batteriesDto = batteries.stream().map(battery -> modelMapper.map(battery, BatteryDto.class))
 				.collect(Collectors.toList());
 
-		Mockito.when(batteryService.saveBatteries(batteriesWithNullIds)).thenReturn(true);
+		Mockito.when(batteryService.saveBatteries(batteriesWithNullIds)).thenReturn(batteries);
 
 		MockHttpServletRequestBuilder mockRequest = MockMvcRequestBuilders.post("/batteries")
 				.contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON)
 				.content(this.objectMapper.writeValueAsString(batteriesDto));
 
-		mockMvc.perform(mockRequest).andExpect(status().isCreated()).andExpect(jsonPath("$[0].name").exists())
-				.andExpect(jsonPath("$[0].postcode").exists()).andExpect(jsonPath("$[0].wattCapacity").exists())
-				.andExpect(jsonPath("$[1].name").exists()).andExpect(jsonPath("$[1].postcode").exists())
-				.andExpect(jsonPath("$[1].wattCapacity").exists()).andExpect(jsonPath("$[2].name").exists())
-				.andExpect(jsonPath("$[2].postcode").exists()).andExpect(jsonPath("$[2].wattCapacity").exists())
+		mockMvc.perform(mockRequest).andExpect(status().isCreated())
 				.andReturn();
 	}
 

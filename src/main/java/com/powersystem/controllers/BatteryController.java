@@ -27,16 +27,16 @@ public class BatteryController {
 	private ModelMapper modelMapper;
 
 	@PostMapping
-	public ResponseEntity<Boolean> saveBatteries(@RequestBody List<BatteryDto> batteriesDto) {
+	public ResponseEntity<List<Battery>> saveBatteries(@RequestBody List<BatteryDto> batteriesDto) {
 		List<Battery> batteries = new ArrayList<>();
 		for (BatteryDto batteryDto : batteriesDto) {
 			batteries.add(modelMapper.map(batteryDto, Battery.class));
 		}
 
-		boolean ok = batteryService.saveBatteries(batteries);
-		HttpStatus httpStatus = ok ? HttpStatus.CREATED : HttpStatus.BAD_REQUEST;
+		List<Battery> savedBatteries = batteryService.saveBatteries(batteries);
+		
 
-		return new ResponseEntity<>(ok, httpStatus);
+		return new ResponseEntity<>(savedBatteries, HttpStatus.CREATED);
 
 	}
 
