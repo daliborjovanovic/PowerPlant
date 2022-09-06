@@ -7,6 +7,7 @@ import static org.mockito.ArgumentMatchers.doubleThat;
 import static org.mockito.ArgumentMatchers.intThat;
 import static org.mockito.Mockito.verify;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -60,8 +61,6 @@ public class BatteryServiceTest {
 		batteryService.saveBatteries(batteries);
 		verify(batteryRepository).saveAll(batteries);
 		
-		
-		
 	}
 	
 	
@@ -94,6 +93,26 @@ public class BatteryServiceTest {
 	  
 	  assertEquals(650, avgCapacity);
 		
+	}
+	
+	
+	@Test
+	void totalCapacity_when_ListOfBaterriesIsEmptyTest() {
+		List<Battery> batteries = new ArrayList<>();
+		
+		double totalCapaciy = batteryService.totalCapacity(batteries);
+		
+		assertEquals(0.0, totalCapaciy);
+	}
+	
+
+	@Test
+	void avgCapacity_when_ListOfBaterriesIsEmptyTest() {
+		List<Battery> batteries = new ArrayList<>();
+		
+		double avgCapaciy = batteryService.avgCapacity(batteries);
+		
+		assertEquals(0.0, avgCapaciy);
 	}
 	
 	
